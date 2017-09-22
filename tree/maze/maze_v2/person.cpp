@@ -106,7 +106,7 @@ void MazePerson::start(MazeMap &mp)
 			cout << endl;
 		}
 		else {
-			nStep++;
+			
 
 			// 实现交互 wsad 或者 WSAD 或者 箭头
 			bool inputIsGood = true;
@@ -157,10 +157,13 @@ void MazePerson::start(MazeMap &mp)
 					move();
 					drawPerson(mp, m_iXNow, m_iYNow);
 				}
+
+				nStep++;
+				gotoXY(0, MAP_ROW_MAX + 1); cout << nStep;
+				Sleep(m_iSpeed);
 			}
 
-			gotoXY(0, MAP_ROW_MAX + 1); cout << nStep;
-			Sleep(m_iSpeed);
+			
 
 		}
 				
