@@ -2,7 +2,7 @@
 #include "person.h"
 #include "map.h"
 #include <iostream>
-#include <stdio.h>
+#include <conio.h>
 #include <string>
 #include <Windows.h>
 
@@ -98,6 +98,12 @@ void MazePerson::start(MazeMap &mp)
 	int nStep = 0;
 	bool frontIsWall;
 	bool leftIsWall;
+
+	gotoXY(5, MAP_ROW_MAX + 1);
+	cout << "                                                  ";
+	gotoXY(5, MAP_ROW_MAX + 1);
+	cout << "Input direction(w s a d):";
+
 	while (notComeOut && nStep <= STEP_MAX) {
 		if ( m_iXNow == OUT_X && m_iYNow == OUT_Y ) {
 			notComeOut = false;
@@ -110,16 +116,14 @@ void MazePerson::start(MazeMap &mp)
 
 			// 实现交互 wsad 或者 WSAD 或者 箭头
 			bool inputIsGood = true;
-			gotoXY(5, MAP_ROW_MAX + 1);
-			cout << "                                                  ";
-			gotoXY(5, MAP_ROW_MAX + 1);
-			cout << "Input direction(w s a d):";
+			
+			
 			char tmpChar;
-			tmpChar = cin.get();
-			gotoXY(5, MAP_ROW_MAX + 1);
-			cout << "                                                  ";
-			gotoXY(5, MAP_ROW_MAX + 1);
-			cout << "Input direction(w s a d):";
+			//tmpChar = cin.get();
+			tmpChar = getch();
+
+			gotoXY(30, MAP_ROW_MAX + 1);
+			cout << tmpChar;
 
 			if (tmpChar == 'W' || tmpChar == 'w') {
 				m_iDirection[0] = NORTH;
@@ -146,8 +150,7 @@ void MazePerson::start(MazeMap &mp)
 				m_iDirection[3] = SOUTH;
 			}
 			else {
-				inputIsGood = false;
-				
+				inputIsGood = false;				
 			}
 
 			if (inputIsGood) {
@@ -156,9 +159,15 @@ void MazePerson::start(MazeMap &mp)
 				if (!frontIsWall) {
 					move();
 					drawPerson(mp, m_iXNow, m_iYNow);
+					nStep++;
+					gotoXY(35, MAP_ROW_MAX + 1);
+					cout << "                     ";
 				}
-
-				nStep++;
+				else {
+					gotoXY(35, MAP_ROW_MAX + 1);
+					cout << "输入的方向前面是墙壁";
+				}
+			
 				gotoXY(0, MAP_ROW_MAX + 1); cout << nStep;
 				Sleep(m_iSpeed);
 			}
